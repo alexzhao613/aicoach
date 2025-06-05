@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>株式会社AI Coach - 企業の人材をAI人材にする！</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #FF6B35;  /* オレンジ（ロゴから） */
+            --secondary-color: #00A8E8; /* ブルー（ロゴから） */
+            --accent-color: #FFA500;    /* アクセントオレンジ */
+            --gradient-start: #FF4500;  /* グラデーション開始色 */
+            --gradient-end: #0080FF;    /* グラデーション終了色 */
+            --dark-bg: #0A0E27;
+            --light-bg: #1A1F3A;
+            --text-light: #E0E0E0;
+            --text-white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* スクロールバーのカスタマイズ */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 5px;
+        }
+
+        /* ヘッダー */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            height: 70px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            gap: 10px;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-text {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover .logo-text {
+            text-shadow: 0 0 15px rgba(255, 107, 53, 0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* ヒーローセクション */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: 80px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(107, 70, 193, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(0, 217, 255, 0.2) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-20px, -20px) rotate(180deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-white), var(--gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.3s forwards;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.6s forwards;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+            box-shadow: 0 5px 20px rgba(255, 107, 53, 0.5);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.7);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--gradient-end);
+            border: 2px solid var(--gradient-end);
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: var(--text-white);
+            transform: translateY(-3px);
+            border-color: transparent;
+        }
+
+        /* サービスセクション */
+        .services {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: var(--light-bg);
+            padding: 2rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            border-radius: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            background: rgba(26, 31, 58, 0.9);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.5));
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-white);
+        }
+
+        /* AIニュースセクション */
+        .news-section {
+            padding: 5rem 2rem;
+            background: var(--light-bg);
+        }
+
+        .news-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .news-item {
+            background: var(--dark-bg);
+            padding: 1.5rem;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .news-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+        }
+
+        .news-date {
+            color: var(--gradient-end);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .news-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-white);
+        }
+
+        /* 会社情報 */
+        .company-info {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .info-item {
+            text-align: center;
+        }
+
+        .info-item h3 {
+            color: var(--gradient-end);
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: var(--light-bg);
+            border-radius: 30px;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            transform: translateY(-3px);
+            color: white;
+        }
+
+        /* お問い合わせセクション */
+        .contact {
+            padding: 5rem 2rem;
+            background: var(--light-bg);
+        }
+
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-form {
+            background: var(--dark-bg);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--gradient-end);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: var(--light-bg);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            color: var(--text-white);
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--gradient-end);
+            box-shadow: 0 0 10px rgba(0, 168, 232, 0.3);
+        }
+
+        /* チャットボット */
+        .chatbot-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255, 107, 53, 0.5);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 5px 20px rgba(255, 107, 53, 0.5); }
+            50% { box-shadow: 0 5px 30px rgba(0, 168, 232, 0.8); }
+            100% { box-shadow: 0 5px 20px rgba(255, 107, 53, 0.5); }
+        }
+
+        .chatbot-button:hover {
+            transform: scale(1.15) rotate(10deg);
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.7);
+        }
+
+        .chatbot-avatar {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            position: relative;
+        }
+
+        .chatbot-bubble {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 24px;
+            height: 24px;
+            background: var(--gradient-end);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .chatbot-window {
+            position: fixed;
+            bottom: 120px;
+            right: 30px;
+            width: 380px;
+            height: 550px;
+            background: var(--dark-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+            border: 2px solid transparent;
+            background-image: linear-gradient(var(--dark-bg), var(--dark-bg)), 
+                              linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+        }
+
+        .chatbot-header {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            padding: 1.2rem;
+            border-radius: 18px 18px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot-header-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chatbot-header-avatar {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .chatbot-status {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chatbot-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .chatbot-online {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .online-dot {
+            width: 8px;
+            height: 8px;
+            background: #00ff00;
+            border-radius: 50%;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .chat-message {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 10px;
+            animation: fadeInUp 0.3s ease-out;
+        }
+
+        .chat-message.ai {
+            justify-content: flex-start;
+        }
+
+        .chat-message.user {
+            justify-content: flex-end;
+        }
+
+        .message-avatar {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 0.8rem 1.2rem;
+            border-radius: 18px;
+            position: relative;
+        }
+
+        .chat-message.ai .message-content {
+            background: var(--light-bg);
+            border-bottom-left-radius: 5px;
+        }
+
+        .chat-message.user .message-content {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            border-bottom-right-radius: 5px;
+            color: white;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 10px 0;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--gradient-end);
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typing {
+            0%, 80%, 100% {
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .chatbot-input .btn {
+            padding: 0.8rem 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .chatbot-input input {
+            flex: 1;
+            padding: 0.8rem;
+            background: var(--light-bg);
+            border: none;
+            border-radius: 20px;
+            color: var(--text-white);
+            margin-right: 0.5rem;
+        }
+
+        .chatbot-input input:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(255, 107, 53, 0.3);
+        }
+
+        /* レスポンシブ */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chatbot-window {
+                width: 90%;
+                right: 5%;
+                height: 450px;
+                bottom: 100px;
+            }
+
+            .chatbot-button {
+                width: 60px;
+                height: 60px;
+            }
+
+            .chatbot-avatar {
+                width: 40px;
+                height: 40px;
+                font-size: 24px;
+            }
+        }
+
+        /* ローディングアニメーション */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--secondary-color);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* パーティクル効果 */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: particle-float 10s linear infinite;
+        }
+
+        @keyframes particle-float {
+            from {
+                transform: translateY(100vh) rotate(0deg);
+            }
+            to {
+                transform: translateY(-100vh) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- パーティクル効果 -->
+    <div class="particles" id="particles"></div>
+
+    <!-- ヘッダー -->
+    <header id="header">
+        <nav>
+            <a href="#" class="logo">
+                <img src="images/logo.png" alt="AI Coach Logo" style="height: 50px;">
+                <span class="logo-text">AI Coach</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">ホーム</a></li>
+                <li><a href="#services">サービス</a></li>
+                <li><a href="#news">AIニュース</a></li>
+                <li><a href="#company">会社情報</a></li>
+                <li><a href="#contact">お問い合わせ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ヒーローセクション -->
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <h1>企業の人材をAI人材にする！</h1>
+            <p>AI時代に、共に進化する<br>今日の学びが、明日の競争力になる</p>
+            <div class="cta-buttons">
+                <a href="#contact" class="btn btn-primary">無料相談を始める</a>
+                <a href="#services" class="btn btn-secondary">サービスを見る</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- サービスセクション -->
+    <section class="services" id="services">
+        <h2 class="section-title">私たちのサービス</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🤖</div>
+                <h3>AI秘書（開発中）</h3>
+                <p>革新的なAI秘書サービスを開発中です。業務効率を飛躍的に向上させる、次世代のパートナーにご期待ください。</p>
+                <p style="color: var(--gradient-end); margin-top: 1rem;">Coming Soon...</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">💡</div>
+                <h3>AIコンサルティング</h3>
+                <p>表面的な課題から潜在的な問題まで発見し、最適なAIソリューションをご提案。導入から永続的なサポートまで一気通貫で対応します。</p>
+                <a href="#contact" class="btn btn-primary" style="margin-top: 1rem;">無料相談する</a>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🧠</div>
+                <h3>AI人材研修プログラム</h3>
+                <p>AIツールを使いこなせる人材を育成。実践的なカリキュラムで、全社員をAIネイティブに変革します。</p>
+                <p style="color: var(--accent-color); margin-top: 1rem; font-weight: bold;">特別価格でご提供中</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- AIニュースセクション -->
+    <section class="news-section" id="news">
+        <div class="news-container">
+            <h2 class="section-title">AIニュース</h2>
+            <div class="news-grid" id="newsGrid">
+                <!-- ニュースアイテムはJavaScriptで動的に生成 -->
+                <div class="news-item">
+                    <div class="news-date">2024.01.15</div>
+                    <h3 class="news-title">OpenAI、新たなAIモデルを発表</h3>
+                    <p>より効率的で高性能なAIモデルが登場し、ビジネス活用の可能性が広がっています。</p>
+                </div>
+                <div class="news-item">
+                    <div class="news-date">2024.01.14</div>
+                    <h3 class="news-title">AI活用企業の生産性が40%向上</h3>
+                    <p>最新の調査により、AI導入企業の業務効率が大幅に改善されていることが明らかに。</p>
+                </div>
+                <div class="news-item">
+                    <div class="news-date">2024.01.13</div>
+                    <h3 class="news-title">日本企業のAI投資が過去最高に</h3>
+                    <p>2024年のAI関連投資額が前年比150%増加し、デジタル変革が加速しています。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 会社情報 -->
+    <section class="company-info" id="company">
+        <h2 class="section-title">会社情報</h2>
+        <div class="info-grid">
+            <div class="info-item">
+                <h3>会社名</h3>
+                <p>株式会社AI Coach</p>
+            </div>
+            <div class="info-item">
+                <h3>代表取締役</h3>
+                <p>齋藤夕姫</p>
+            </div>
+            <div class="info-item">
+                <h3>所在地</h3>
+                <p>〒141-0031<br>東京都品川区西五反田1-32-11<br>恒信ビル5F</p>
+            </div>
+            <div class="info-item">
+                <h3>連絡先</h3>
+                <p>TEL: 03-6820-7693<br>Email: info@aicjp.ai</p>
+            </div>
+        </div>
+        <div class="social-links">
+            <a href="https://line.me/R/ti/p/@pkc9391w" target="_blank" class="social-link">
+                <span>📱</span> LINE@で最新情報
+            </a>
+            <a href="https://www.instagram.com/aicoach.saito?igsh=MTZ4Y3JhM2J5djU0Mw==" target="_blank" class="social-link">
+                <span>📷</span> Instagram
+            </a>
+        </div>
+    </section>
+
+    <!-- お問い合わせ -->
+    <section class="contact" id="contact">
+        <div class="contact-container">
+            <h2 class="section-title">お問い合わせ</h2>
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label for="company">会社名</label>
+                    <input type="text" id="company" name="company" required>
+                </div>
+                <div class="form-group">
+                    <label for="name">お名前</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">メールアドレス</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">お問い合わせ内容</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">送信する</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- チャットボット -->
+    <div class="chatbot-button" onclick="toggleChatbot()">
+        <div class="chatbot-avatar">
+            🤖
+            <div class="chatbot-bubble">💬</div>
+        </div>
+    </div>
+
+    <div class="chatbot-window" id="chatbotWindow">
+        <div class="chatbot-header">
+            <div class="chatbot-header-info">
+                <div class="chatbot-header-avatar">🤖</div>
+                <div class="chatbot-status">
+                    <span class="chatbot-name">AI Coach アシスタント</span>
+                    <span class="chatbot-online">
+                        <span class="online-dot"></span>
+                        オンライン
+                    </span>
+                </div>
+            </div>
+            <span style="cursor: pointer; font-size: 20px;" onclick="toggleChatbot()">✕</span>
+        </div>
+        <div class="chatbot-messages" id="chatMessages">
+            <div class="chat-message ai">
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                    こんにちは！AI Coachアシスタントです✨<br>
+                    どのようなご質問でもお気軽にどうぞ！
+                </div>
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatInput" placeholder="メッセージを入力..." onkeypress="if(event.key==='Enter')sendMessage()">
+            <button class="btn btn-primary" onclick="sendMessage()">送信</button>
+        </div>
+    </div>
+
+    <script>
+        // パーティクル生成
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.width = Math.random() * 5 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 10 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // スクロール時のヘッダー変更
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(10, 14, 39, 0.98)';
+                header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.3)';
+            } else {
+                header.style.background = 'rgba(10, 14, 39, 0.95)';
+                header.style.boxShadow = 'none';
+            }
+        });
+
+        // スムーズスクロール
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // チャットボット機能
+        function toggleChatbot() {
+            const chatbotWindow = document.getElementById('chatbotWindow');
+            chatbotWindow.style.display = chatbotWindow.style.display === 'none' || chatbotWindow.style.display === '' ? 'flex' : 'none';
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const messages = document.getElementById('chatMessages');
+            
+            if (input.value.trim() === '') return;
+
+            // ユーザーメッセージを追加
+            const userMessage = document.createElement('div');
+            userMessage.className = 'chat-message user';
+            userMessage.innerHTML = `
+                <div class="message-content">${input.value}</div>
+            `;
+            messages.appendChild(userMessage);
+
+            // タイピングインジケーターを表示
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'chat-message ai';
+            typingDiv.id = 'typing-indicator';
+            typingDiv.innerHTML = `
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                    <div class="typing-indicator">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+            `;
+            messages.appendChild(typingDiv);
+            messages.scrollTop = messages.scrollHeight;
+
+            // AI応答（シミュレーション）
+            setTimeout(() => {
+                // タイピングインジケーターを削除
+                document.getElementById('typing-indicator').remove();
+
+                const aiMessage = document.createElement('div');
+                aiMessage.className = 'chat-message ai';
+                
+                // 簡単な応答ロジック
+                const userInput = input.value.toLowerCase();
+                let response = '';
+                
+                if (userInput.includes('料金') || userInput.includes('価格')) {
+                    response = '料金についてのお問い合わせありがとうございます！🎯<br><br>お客様の企業規模やニーズに合わせて最適なプランをご提案いたします。詳細は無料相談でご案内させていただきます。';
+                } else if (userInput.includes('研修')) {
+                    response = 'AI人材研修プログラムについてですね！📚<br><br>初級から上級まで段階的に学べるカリキュラムをご用意しています。実践的なワークショップも含まれており、すぐに業務に活かせる内容となっています。';
+                } else if (userInput.includes('導入')) {
+                    response = 'AI導入のご検討ありがとうございます！🚀<br><br>まず無料相談から始まります。企業様の課題をヒアリングし、最適なソリューションをご提案。導入後も永続的にサポートいたします。';
+                } else if (userInput.includes('秘書')) {
+                    response = 'AI秘書にご興味をお持ちいただきありがとうございます！🤖✨<br><br>現在開発中の革新的なサービスです。業務効率を飛躍的に向上させる機能を搭載予定です。リリースをお楽しみに！';
+                } else {
+                    response = 'ご質問ありがとうございます！😊<br><br>より詳しい情報については、お問い合わせフォームからご連絡いただくか、お電話（03-6820-7693）でお問い合わせください。';
+                }
+                
+                aiMessage.innerHTML = `
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-content">${response}</div>
+                `;
+                messages.appendChild(aiMessage);
+                messages.scrollTop = messages.scrollHeight;
+            }, 1500);
+
+            input.value = '';
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        // お問い合わせフォーム
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('お問い合わせありがとうございます。担当者より2営業日以内にご連絡させていただきます。');
+            this.reset();
+        });
+
+        // AIニュース自動取得機能
+        async function fetchAINews() {
+            const newsGrid = document.getElementById('newsGrid');
+            
+            // ローディング表示
+            newsGrid.innerHTML = '<div style="text-align: center; color: var(--gradient-end);"><div class="loading"></div> AI関連ニュースを取得中...</div>';
+            
+            try {
+                // ここでAPIを呼び出す（実装例）
+                // const response = await fetch('/api/ai-news');
+                // const newsData = await response.json();
+                
+                // デモ用のサンプルニュース
+                const sampleNews = [
+                    {
+                        date: new Date().toLocaleDateString('ja-JP').replace(/\//g, '.'),
+                        title: 'GPT-5の開発が進行中、更なる性能向上に期待',
+                        desc: 'OpenAIが次世代モデルの開発を発表。企業向け機能が大幅に強化される見込み。'
+                    },
+                    {
+                        date: new Date(Date.now() - 86400000).toLocaleDateString('ja-JP').replace(/\//g, '.'),
+                        title: '国内企業のAI投資額が前年比200%増加',
+                        desc: '経済産業省の調査により、日本企業のAI導入が急速に進んでいることが判明。'
+                    },
+                    {
+                        date: new Date(Date.now() - 172800000).toLocaleDateString('ja-JP').replace(/\//g, '.'),
+                        title: 'AI活用による業務効率化で残業時間が30%削減',
+                        desc: '大手企業の事例研究で、AI導入の具体的な効果が明らかに。'
+                    },
+                    {
+                        date: new Date(Date.now() - 259200000).toLocaleDateString('ja-JP').replace(/\//g, '.'),
+                        title: 'AIエンジニアの需要が過去最高に',
+                        desc: '転職市場でAI関連職種の求人倍率が5倍に上昇。人材育成が急務に。'
+                    }
+                ];
+                
+                // ニュースを表示
+                newsGrid.innerHTML = '';
+                sampleNews.forEach((news, index) => {
+                    const newsItem = document.createElement('div');
+                    newsItem.className = 'news-item';
+                    newsItem.style.animationDelay = `${index * 0.1}s`;
+                    newsItem.innerHTML = `
+                        <div class="news-date">${news.date}</div>
+                        <h3 class="news-title">${news.title}</h3>
+                        <p>${news.desc}</p>
+                    `;
+                    newsGrid.appendChild(newsItem);
+                });
+                
+            } catch (error) {
+                console.error('ニュース取得エラー:', error);
+                newsGrid.innerHTML = '<div style="text-align: center; color: var(--accent-color);">ニュースの取得に失敗しました。後ほど再試行してください。</div>';
+            }
+        }
+
+        // ページ読み込み時にニュースを取得
+        fetchAINews();
+        
+        // 5分ごとに自動更新
+        setInterval(fetchAINews, 300000);
+
+        // 初期化
+        createParticles();
+    </script>
+</body>
+</html>
